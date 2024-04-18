@@ -1,25 +1,356 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base target="_top" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
     <script
       src="https://code.jquery.com/jquery-3.6.4.min.js"
       integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
       crossorigin="anonymous"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100%;
+        height: 100vh;
+        background: #f4f8fb;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px 30px;
+      }
+      .heading {
+        font-family: Poppins;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: -0.01em;
+        text-align: left;
+        color: #90a5b4;
+      }
+      .user-id {
+        font-family: Poppins;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 20px;
+        letter-spacing: -0.01em;
+        text-align: left;
+        color: #004d6c;
+        /* margin-top: 12px; */
+      }
+      .top-block {
+        padding: 20px;
+        /* background: #fff; */
+        /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04); */
+        /* border-radius: 10px; */
+        margin: 20px auto 0 auto;
+        width: 100%;
+        /* max-width: 370px; */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* flex-direction: column; */
+        gap: 12px;
+      }
+      .middle {
+        margin: 20px;
+        width: 100%;
+        border-radius: 20px;
+        background: #ffffffaf;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.04);
+        /* max-width: 370px; */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        /* flex-direction: column; */
+        gap: 20px;
+        padding: 20px;
+      }
+      .goal-text {
+        font-size: 14px;
+        font-weight: bold;
+        color: #004d6c;
+      }
+      .displaygoal {
+        font-size: 22px;
+        font-weight: bold;
+        color: #004d6c;
+      }
+      .circle {
+        /* margin-top: 20px; */
+        border-radius: 50%;
+        /* background: #f4f8fb; */
+        border: 3px solid #e8f8ff;
+        /* background: rgb(36, 150, 255); */
+        /* background: linear-gradient(
+          0deg,
+          rgba(36, 150, 255, 1) 0%,
+          rgba(255, 255, 255, 1) 60%,
+          rgba(255, 255, 255, 1) 100%
+        ); */
+        background-image: url("process.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+
+        display: flex;
+        flex-direction: column;
+        width: 220px;
+        height: 220px;
+        justify-content: center;
+        align-items: center;
+      }
+      #account-num {
+        margin-top: 40px;
+        font-size: 30px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+      .outer-percentage {
+        font-size: 16px;
+        color: #004d6c;
+        font-weight: bold;
+        letter-spacing: 0.4px;
+      }
+      .percentage {
+        font-size: 25px;
+        font-weight: bold;
+        color: #369fff;
+      }
+      .note-text {
+        font-size: 12px;
+        color: #acacac;
+      }
+      .note-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-add {
+        font-size: 16px;
+        font-weight: bold;
+        background: #369fff;
+        color: #fff;
+        border: none;
+        margin: auto;
+        position: absolute;
+        bottom: 20px;
+        width: 200px;
+        height: 48px;
+        border-radius: 30px;
+        left: 0;
+        right: 0;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.222);
+      }
+    </style>
   </head>
   <body>
-    <h2>飲水記錄</h2>
-    <form id="waterForm">
+    <div class="container">
+      <div class="top-block">
+        <div class="top-info">
+          <div class="heading">Welcome Back!</div>
+          <!-- Button trigger modal -->
+          <div class="user-id" id="userID"></div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+          Set Goal
+        </button>
+      </div>
+
+      <div class="middle">
+        <div class="circle">
+          <div id="goaltext" class="goal-text">Goal</div>
+          <div id="displaygoal"></div>
+          <div id="account-num" class="achievement-text">ml</div>
+        </div>
+
+        <div id="outer-percentage" class="outer-percentage">
+          Reaching
+          <span class="percentage"><span id="displayremaining"> </span>% </span>
+          of your goal
+        </div>
+        <div class="note-block">
+          <div class="note-text">Hydrate for Health:</div>
+          <div class="note-text">Boost Energy, Focus, & Immunity!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Goal Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Set Goal</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="goal">
+              <div class="form-group">
+                <input
+                  id="goal-value"
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm" />
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal">
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal">
+              Close
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- <h2>飲水記錄</h2> -->
+
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn-add"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal2">
+      <i class="bi bi-plus-lg"></i>
+      Add
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal2"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Add a Record
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="waterForm">
+              <label for="volume">飲水量(ml):</label>
+              <input type="number" id="volume" name="volume" required /><br />
+              <button
+                type="submit"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
+                Add
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <form id="waterForm">
       <label for="volume">飲水量(ml):</label>
       <input type="number" id="volume" name="volume" required /><br />
-      <button type="submit">提交</button>
-    </form>
+      <button type="submit">Add</button>
+    </form> -->
 
     <script>
+      // https://script.google.com/macros/s/AKfycbwoo8fSH_jl6yPhdMQXbW6MTBtFltrhXHvqVLqruJB3iRFusQE11cQC03UPhOMjTmQulg/exec
       let user;
-      window.onload = function () {
-        user = getUrlParameter("user");
+      let achievement = 0;
+      let record = [];
+      window.onload = async function () {
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+
+        user = urlParams.get("user");
+        let disable = urlParams.get("disable");
+        if (disable === "true") {
+          // <div id="goaltext" class="goal-text">Goal</div>
+          // <div id="displaygoal"></div>
+          // id="outer-percentage"
+          document.getElementById("goaltext").style.display = "none";
+          document.getElementById("displaygoal").style.display = "none";
+          document.getElementById("outer-percentage").style.display = "none";
+        }
+        document.getElementById("userID").innerHTML = user;
+        await get_goal();
+        await get_record();
+        console.log("achievement", achievement);
+        console.log("goal", sessionStorage.getItem(user));
+        document.getElementById("displayremaining").innerHTML =
+          (achievement * 100) / Number(sessionStorage.getItem(user));
       };
+
+      async function get_record() {
+        await fetch(
+          "https://script.google.com/macros/s/AKfycbxZ07BgWbPU9-KjFXkF7CycLkPhG218B2KCaBpuKcE_nThn8ltFhohmCrS_2wtxjjEvLg/exec"
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.user);
+            record = data.user;
+            achievement = record
+              .filter((item) => item.user == user)
+              .reduce(
+                (accumulator, currentValue) =>
+                  accumulator + Number(currentValue.volume),
+                0
+              );
+            document.getElementById("account-num").innerHTML =
+              achievement + " ml";
+            // console.log("record_val", record_val);
+          });
+      }
+
       // 獲取URL中的參數值
       function getUrlParameter(name) {
         let params = new URLSearchParams(document.location.search);
@@ -30,34 +361,44 @@
       }
 
       // 這個函數用於處理表單提交
-      function submitForm(e) {
+      async function submitForm(e) {
         e.preventDefault();
         // let user = getUrlParameter("user"); // 從URL中獲取使用者ID
         // console.log("User IDagain:", user);
         let volume = document.getElementById("volume").value;
-        send_data(user, volume);
-
+        achievement += Number(volume);
+        document.getElementById("displayremaining").innerHTML =
+          (achievement * 100) / Number(sessionStorage.getItem(user)) + "%";
+        await send_data(user, volume);
+        // await get_record();
         document.getElementById("volume").value = ""; // 清空飲水量輸入框
       }
 
-      function send_data(user, volume) {
-        $.ajax({
-          url: "https://script.google.com/macros/s/AKfycbx9XxeMz9bCRy-VjH7HfdEpWaZ2WU72hTSsQnNVNzOAdIzr0A702pVc0LTcTJm44WdZUA/exec",
+      async function send_data(user, volume) {
+        $.post({
+          url: "https://script.google.com/macros/s/AKfycbxZ07BgWbPU9-KjFXkF7CycLkPhG218B2KCaBpuKcE_nThn8ltFhohmCrS_2wtxjjEvLg/exec",
           data: {
             user: user,
             volume: volume,
           },
           success: function (response) {
             if (response == "成功") {
-              // alert("成功");
-              show_hide();
-              send = true;
-              document.getElementById("status").innerHTML = "喝水成功...";
-              setInterval(auto_close, 1500);
+              alert("成功");
+              // show_hide();
+              // send = true;
+              // document.getElementById("status").innerHTML = "喝水成功...";
+              // setInterval(auto_close, 1500);
             } else {
             }
           },
         });
+      }
+
+      function get_goal() {
+        if (sessionStorage.getItem(user)) {
+          document.getElementById("displaygoal").innerHTML =
+            sessionStorage.getItem(user);
+        }
       }
 
       // 顯示提交成功的訊息
@@ -65,6 +406,17 @@
         alert(response); // 在提交成功後顯示成功訊息
       }
 
+      document.getElementById("goal").addEventListener("submit", function (e) {
+        e.preventDefault();
+        // send_goal();
+        sessionStorage.setItem(
+          user,
+          document.getElementById("goal-value").value
+        );
+        get_goal();
+
+        console.log("Goal:", goal);
+      });
       // 監聽表單提交事件
       document
         .getElementById("waterForm")
