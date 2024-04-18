@@ -326,8 +326,10 @@
         await get_record();
         console.log("achievement", achievement);
         console.log("goal", localStorage.getItem(user));
-        document.getElementById("displayremaining").innerHTML =
-          (achievement * 100) / Number(localStorage.getItem(user));
+        document.getElementById("displayremaining").innerHTML = (
+          (achievement * 100) /
+          Number(localStorage.getItem(user))
+        ).toFixed(2);
       };
 
       async function get_record() {
@@ -367,8 +369,10 @@
         // console.log("User IDagain:", user);
         let volume = document.getElementById("volume").value;
         achievement += Number(volume);
-        document.getElementById("displayremaining").innerHTML =
-          (achievement * 100) / Number(localStorage.getItem(user)) + "%";
+        document.getElementById("displayremaining").innerHTML = (
+          (achievement * 100) /
+          Number(localStorage.getItem(user))
+        ).toFixed(2);
         document.getElementById("account-num").innerHTML = achievement;
         await send_data(user, volume);
         // await get_record();
