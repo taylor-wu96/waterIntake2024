@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h2>飲水記錄</h2>
+    <form id="waterForm">
+      <label for="volume">飲水量(ml):</label>
+      <input type="number" id="volume" name="volume" required /><br />
+      <button type="submit">提交</button>
+    </form>
+
+    <script>
+      let user;
+      window.onload = function () {
+        user = getUrlParameter("user");
+      };
+      // 獲取URL中的參數值
+      function getUrlParameter(name) {
+        let params = new URLSearchParams(document.location.search);
+        console.log("params:", params);
+        let user = params.get("user");
+        console.log("User ID:", user);
+        return user;
+      }
+
+      // 這個函數用於處理表單提交
+      function submitForm(e) {
+        e.preventDefault();
+        // let user = getUrlParameter("user"); // 從URL中獲取使用者ID
+        // console.log("User IDagain:", user);
+        let volume = document.getElementById("volume").value;
+        send_data(user, volume);
+
+        document.getElementById("volume").value = ""; // 清空飲水量輸入框
+      }
+
+      function send_data(user, volume) {
+        $.ajax({
+          url: "https://script.google.com/macros/s/AKfycbx9XxeMz9bCRy-VjH7HfdEpWaZ2WU72hTSsQnNVNzOAdIzr0A702pVc0LTcTJm44WdZUA/exec",
+          data: {
+            user: user,
+            volume: volume,
+          },
+          success: function (response) {
+            if (response == "成功") {
+              // alert("成功");
+              show_hide();
+              send = true;
+              document.getElementById("status").innerHTML = "喝水成功...";
+              setInterval(auto_close, 1500);
+            } else {
+            }
+          },
+        });
+      }
+
+      // 顯示提交成功的訊息
+      function showSuccessMessage(response) {
+        alert(response); // 在提交成功後顯示成功訊息
+      }
+
+      // 監聽表單提交事件
+      document
+        .getElementById("waterForm")
+        .addEventListener("submit", submitForm);
+    </script>
+  </body>
+</html>

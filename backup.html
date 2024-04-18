@@ -1,0 +1,121 @@
+https://script.google.com/a/macros/iss.nthu.edu.tw/s/AKfycbxTTr3uI9xKoW1Rk5a8ca7hGouKZ65V0TK4xpAhe_4X/dev"
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+    /> -->
+    <title>Water Intake Experiment</title>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script type="text/javascript" src="jquery.waterwave.js"></script>
+    <link rel="stylesheet" href="style.css" /> -->
+    <!-- <script src="main.js"></script> -->
+    <script window.onload = function() {
+        callwapp();
+        processUser();
+        
+      }
+      let send=false;
+      function processUser()
+      {
+        let parameters = location.search.substring(1).split("&");
+
+        let temp = parameters[0].split("=");
+        user = unescape(temp[1]);
+        temp = parameters[1].split("=");
+        volume = unescape(temp[1]);
+        document.getElementById("user").innerHTML = user;
+        // document.getElementById("volume").innerHTML = volume+' ml';
+        if(send==false){
+          send_data(user, volume);
+        }
+        // setInterval(auto_close, 1500);
+      }
+      function auto_close(){
+        window.open('', '_self', '');
+        window.close();
+      }
+
+      function send_data(user, volume) {
+        $.ajax({
+          url: "https://script.google.com/a/macros/iss.nthu.edu.tw/s/AKfycbxTTr3uI9xKoW1Rk5a8ca7hGouKZ65V0TK4xpAhe_4X/dev",
+          data: {
+              "user": user,
+              "volume": volume,
+          },
+          success: function(response) {
+            if(response == "成功"){
+              // alert("成功");
+              show_hide();
+              send=true;
+              document.getElementById("status").innerHTML = '喝水成功...';
+              setInterval(auto_close, 1500);
+            }
+            else{
+
+            }
+          },
+        });
+      };
+      function callwapp(){
+        $(".waterwave-canvas").waterwave({
+
+        // parent container
+        parent : '',
+
+        // color of waves
+        color : '#55adcf',
+
+        // or 'down'
+        direction: 'up',
+
+        // background color
+        background: ''
+        
+      });
+
+      }
+      function show_hide(){
+      let dialog = document.getElementsByClassName('toast')[0];
+      dialog.classList.remove('display');
+      setTimeout(function() {dialog.classList.add('display')}, 1500);
+      }
+
+>
+</script>
+  </head>
+  <body>
+    <div id="canvas-cont">
+      <canvas class="waterwave-canvas"></canvas>
+    </div>
+    <div class="container">
+      <div id="status">紀錄喝水中....</div>
+      <div id="user"></div>
+      <div id="volume"></div>
+      <div class="notice">
+        如果紀錄成功之後未成功關閉頁面，請手動關閉頁面，以免造成資料錯誤。
+      </div>
+    </div>
+    <div
+      class="display toast align-items-center"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div style="font-size: 1.5rem">紀錄喝水成功</div>
+        <div style="font-size: 0.8rem">即將關閉網頁</div>
+      </div>
+    </div>
+  </body>
+</html>
