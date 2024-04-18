@@ -369,6 +369,7 @@
         achievement += Number(volume);
         document.getElementById("displayremaining").innerHTML =
           (achievement * 100) / Number(localStorage.getItem(user)) + "%";
+        document.getElementById("account-num").innerHTML = achievement;
         await send_data(user, volume);
         // await get_record();
         document.getElementById("volume").value = ""; // 清空飲水量輸入框
