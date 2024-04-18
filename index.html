@@ -325,9 +325,9 @@
         await get_goal();
         await get_record();
         console.log("achievement", achievement);
-        console.log("goal", sessionStorage.getItem(user));
+        console.log("goal", localStorage.getItem(user));
         document.getElementById("displayremaining").innerHTML =
-          (achievement * 100) / Number(sessionStorage.getItem(user));
+          (achievement * 100) / Number(localStorage.getItem(user));
       };
 
       async function get_record() {
@@ -368,7 +368,7 @@
         let volume = document.getElementById("volume").value;
         achievement += Number(volume);
         document.getElementById("displayremaining").innerHTML =
-          (achievement * 100) / Number(sessionStorage.getItem(user)) + "%";
+          (achievement * 100) / Number(localStorage.getItem(user)) + "%";
         await send_data(user, volume);
         // await get_record();
         document.getElementById("volume").value = ""; // 清空飲水量輸入框
@@ -395,9 +395,9 @@
       }
 
       function get_goal() {
-        if (sessionStorage.getItem(user)) {
+        if (localStorage.getItem(user)) {
           document.getElementById("displaygoal").innerHTML =
-            sessionStorage.getItem(user);
+            localStorage.getItem(user);
         }
       }
 
@@ -409,10 +409,7 @@
       document.getElementById("goal").addEventListener("submit", function (e) {
         e.preventDefault();
         // send_goal();
-        sessionStorage.setItem(
-          user,
-          document.getElementById("goal-value").value
-        );
+        localStorage.setItem(user, document.getElementById("goal-value").value);
         get_goal();
 
         console.log("Goal:", goal);
