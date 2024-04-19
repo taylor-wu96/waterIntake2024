@@ -189,13 +189,22 @@
           Set Goal
         </button>
         </div>
-        
+        <div class="bottle-button"  id="bottle-button">
+          <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal2">
+          Set Empty Bottle
+        </button>
+        </div>
       </div>
 
       <div class="middle">
         <div class="circle">
           <div id="goaltext" class="goal-text">Goal</div>
           <div id="displaygoal"></div>
+          <div id="recordbottle"></div>
           <div id="account-num" class="achievement-text">ml</div>
         </div>
 
@@ -246,17 +255,48 @@
               </div>
             </form>
           </div>
-          <!-- <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal">
-              Close
-            </button>
-          </div> -->
         </div>
       </div>
     </div>
+
+     <!-- Goal Modal -->
+    <div
+     class="modal fade"
+     id="exampleModal2"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h1 class="modal-title fs-5" id="exampleModal2Label">Set Empty Bottle</h1>
+           <button
+             type="button"
+             class="btn-close"
+             data-bs-dismiss="modal"
+             aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+           <form id="bottle">
+             <div class="form-group">
+               <input
+                 id="bottle-value"
+                 type="text"
+                 class="form-control"
+                 aria-label="Sizing example input"
+                 aria-describedby="inputGroup-sizing-sm" />
+               <button
+                 type="submit"
+                 class="btn btn-primary"
+                 data-bs-dismiss="modal">
+                 Save
+               </button>
+             </div>
+           </form>
+         </div>
+       </div>
+     </div>
+   </div>
 
     <!-- <h2>飲水記錄</h2> -->
 
@@ -304,6 +344,7 @@
         </div>
       </div>
     </div>
+    
 
     <!-- <form id="waterForm">
       <label for="volume">飲水量(ml):</label>
@@ -404,12 +445,6 @@
           success: function (response) {
             // if (response == "成功") {
             //   alert("成功");
-            //   // show_hide();
-            //   // send = true;
-            //   // document.getElementById("status").innerHTML = "喝水成功...";
-            //   // setInterval(auto_close, 1500);
-            // } else {
-            // }
           },
         });
       }
@@ -417,6 +452,13 @@
       function get_goal() {
         if (localStorage.getItem(user)) {
           document.getElementById("displaygoal").innerHTML =
+            localStorage.getItem(user);
+        }
+      }
+
+      function get_bottle() {
+        if (localStorage.getItem(user)) {
+          document.getElementById("recordbottle").innerHTML =
             localStorage.getItem(user);
         }
       }
@@ -434,6 +476,16 @@
 
         console.log("Goal:", goal);
       });
+
+      document.getElementById("bottle").addEventListener("submit", function (e) {
+        e.preventDefault();
+        // send_goal();
+        localStorage.setItem(user, document.getElementById("bottle-value").value);
+        get_bottle();
+
+        console.log("Bottle:", bottle);
+      });
+
       // 監聽表單提交事件
       document
         .getElementById("waterForm")
