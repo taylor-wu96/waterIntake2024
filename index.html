@@ -47,13 +47,18 @@
         text-align: left;
         color: #90a5b4;
       }
+      .home-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       .user-id {
         font-family: Poppins;
         font-size: 22px;
         font-weight: 700;
         line-height: 20px;
         letter-spacing: -0.01em;
-        text-align: left;
+        text-align: center;
         color: #004d6c;
         /* margin-top: 12px; */
       }
@@ -167,19 +172,24 @@
   <body>
     <div class="container">
       <div class="top-block">
+        <div class="home-button">
+          <img src="el_home-alt.png" alt="home-button" id="home-button" />
+        </div>
         <div class="top-info">
           <div class="heading">Welcome Back!</div>
           <!-- Button trigger modal -->
           <div class="user-id" id="userID"></div>
         </div>
-
-        <button
+        <div class="goal-button"  id="goal-button">
+          <button
           type="button"
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal">
           Set Goal
         </button>
+        </div>
+        
       </div>
 
       <div class="middle">
@@ -306,6 +316,10 @@
       let user;
       let achievement = 0;
       let record = [];
+      let homeButton = document.getElementById("home-button");
+      homeButton.addEventListener("click", function () {
+        window.location.href = "home.html";
+      });
       window.onload = async function () {
         const queryString = window.location.search;
         console.log(queryString);
@@ -320,6 +334,7 @@
           document.getElementById("goaltext").style.display = "none";
           document.getElementById("displaygoal").style.display = "none";
           document.getElementById("outer-percentage").style.display = "none";
+          document.getElementById("goal-button").style.display = "none";
         }
         document.getElementById("userID").innerHTML = user;
         await get_goal();
@@ -387,14 +402,14 @@
             volume: volume,
           },
           success: function (response) {
-            if (response == "成功") {
-              alert("成功");
-              // show_hide();
-              // send = true;
-              // document.getElementById("status").innerHTML = "喝水成功...";
-              // setInterval(auto_close, 1500);
-            } else {
-            }
+            // if (response == "成功") {
+            //   alert("成功");
+            //   // show_hide();
+            //   // send = true;
+            //   // document.getElementById("status").innerHTML = "喝水成功...";
+            //   // setInterval(auto_close, 1500);
+            // } else {
+            // }
           },
         });
       }
