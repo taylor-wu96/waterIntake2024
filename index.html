@@ -194,7 +194,7 @@
           type="button"
           class="btn btn-primary"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal2">
+          data-bs-target="#exampleModal3">
           Set Empty Bottle
         </button>
         </div>
@@ -262,14 +262,14 @@
      <!-- Goal Modal -->
     <div
      class="modal fade"
-     id="exampleModal2"
+     id="exampleModal3"
      tabindex="-1"
      aria-labelledby="exampleModalLabel"
      aria-hidden="true">
      <div class="modal-dialog">
        <div class="modal-content">
          <div class="modal-header">
-           <h1 class="modal-title fs-5" id="exampleModal2Label">Set Empty Bottle</h1>
+           <h1 class="modal-title fs-5" id="exampleModal3Label">Set Empty Bottle</h1>
            <button
              type="button"
              class="btn-close"
@@ -379,9 +379,11 @@
         }
         document.getElementById("userID").innerHTML = user;
         await get_goal();
+        await get_bottle();
         await get_record();
         console.log("achievement", achievement);
-        console.log("goal", localStorage.getItem(user));
+        console.log("goal", localStorage.getItem(user + "_goal"));
+        console.log("bottle", localStorage.getItem(user + "_bottle"));
         document.getElementById("displayremaining").innerHTML = (
           (achievement * 100) /
           Number(localStorage.getItem(user))
@@ -423,14 +425,18 @@
         e.preventDefault();
         // let user = getUrlParameter("user"); // 從URL中獲取使用者ID
         // console.log("User IDagain:", user);
+        let bottle = document.getElementById("bottle").value;
         let volume = document.getElementById("volume").value;
-        achievement += Number(volume);
+        // let bottle = get_bottle();
+        let correctedVolume = Number(volume) - Number(bottle);
+        console.log("correct volume:", correctedVolume);
+        achievement += Number(correctedVolume);
         document.getElementById("displayremaining").innerHTML = (
           (achievement * 100) /
           Number(localStorage.getItem(user))
         ).toFixed(2);
         document.getElementById("account-num").innerHTML = achievement;
-        await send_data(user, volume);
+        await send_data(user, correctedVolume);
         // await get_record();
         document.getElementById("volume").value = ""; // 清空飲水量輸入框
       }
@@ -450,16 +456,16 @@
       }
 
       function get_goal() {
-        if (localStorage.getItem(user)) {
+        if (localStorage.getItem(user + "_goal")) {
           document.getElementById("displaygoal").innerHTML =
-            localStorage.getItem(user);
+            localStorage.getItem(user + "_goal");
         }
       }
 
       function get_bottle() {
-        if (localStorage.getItem(user)) {
+        if (localStorage.getItem(user + "_bottle")) {
           document.getElementById("recordbottle").innerHTML =
-            localStorage.getItem(user);
+            localStorage.getItem(user + "_bottle");
         }
       }
 
@@ -471,18 +477,20 @@
       document.getElementById("goal").addEventListener("submit", function (e) {
         e.preventDefault();
         // send_goal();
-        localStorage.setItem(user, document.getElementById("goal-value").value);
+        localStorage.setItem(user + "_goal", document.getElementById("goal-value").value);
         get_goal();
 
+        // console.log("Goal:", localStorage.getItem(user + "_goal"));
         console.log("Goal:", goal);
       });
 
       document.getElementById("bottle").addEventListener("submit", function (e) {
         e.preventDefault();
         // send_goal();
-        localStorage.setItem(user, document.getElementById("bottle-value").value);
+        localStorage.setItem(user + "_bottle", document.getElementById("bottle-value").value);
         get_bottle();
 
+        // console.log("Bottle:", localStorage.getItem(user + "_bottle"));
         console.log("Bottle:", bottle);
       });
 
