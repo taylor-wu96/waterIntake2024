@@ -425,18 +425,21 @@
         e.preventDefault();
         // let user = getUrlParameter("user"); // 從URL中獲取使用者ID
         // console.log("User IDagain:", user);
-        let bottle = document.getElementById("bottle").value;
-        let volume = document.getElementById("volume").value;
+        let bottle = document.getElementById("recordbottle").innerHTML;
+        let volume = document.getElementById("volume").value - bottle;
         // let bottle = get_bottle();
-        let correctedVolume = Number(volume) - Number(bottle);
-        console.log("correct volume:", correctedVolume);
-        achievement += Number(correctedVolume);
+        // console.log("bottle:", bottle);
+        // console.log("volume:", volume);
+        // let correctedVolume = Number(volume) - Number(bottle);
+        console.log("type", typeof volume, typeof bottle);
+        console.log("correct volume:", volume);
+        achievement += Number(volume);
         document.getElementById("displayremaining").innerHTML = (
           (achievement * 100) /
           Number(localStorage.getItem(user))
         ).toFixed(2);
         document.getElementById("account-num").innerHTML = achievement;
-        await send_data(user, correctedVolume);
+        await send_data(user, volume);
         // await get_record();
         document.getElementById("volume").value = ""; // 清空飲水量輸入框
       }
