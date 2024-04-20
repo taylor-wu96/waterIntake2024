@@ -204,7 +204,7 @@
         <div class="circle">
           <div id="goaltext" class="goal-text">Goal</div>
           <div id="displaygoal"></div>
-          <!-- <div id="recordbottle"></div> -->
+          <div id="recordbottle" style="display: none;"></div>
           <div id="account-num" class="achievement-text">ml</div>
         </div>
 
@@ -376,6 +376,7 @@
           document.getElementById("displaygoal").style.display = "none";
           document.getElementById("outer-percentage").style.display = "none";
           document.getElementById("goal-button").style.display = "none";
+          // document.getElementById("recordbottle").style.display = "none";
         }
         document.getElementById("userID").innerHTML = user;
         await get_goal();
@@ -386,7 +387,7 @@
         console.log("bottle", localStorage.getItem(user + "_bottle"));
         document.getElementById("displayremaining").innerHTML = (
           (achievement * 100) /
-          Number(localStorage.getItem(user))
+          Number(localStorage.getItem(user + "_goal"))
         ).toFixed(2);
       };
 
@@ -434,9 +435,10 @@
         console.log("type", typeof volume, typeof bottle);
         console.log("correct volume:", volume);
         achievement += Number(volume);
+        // console.log("display:", (achievement * 100) / Number(localStorage.getItem(user + "_goal")))
         document.getElementById("displayremaining").innerHTML = (
           (achievement * 100) /
-          Number(localStorage.getItem(user))
+          Number(localStorage.getItem(user + "_goal"))
         ).toFixed(2);
         document.getElementById("account-num").innerHTML = achievement;
         await send_data(user, volume);
